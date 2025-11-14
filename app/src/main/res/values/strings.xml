@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">UCP1</string>
+
+    <string name="tampil">LOGIN</string>
+    <string name="username">Username</string>
+    <string name="pass">Password</string>
+    <string name="Akt">Mata Kuliah</string>
+
+
+
+
+</resources>
