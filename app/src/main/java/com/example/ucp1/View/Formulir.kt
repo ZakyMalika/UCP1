@@ -62,7 +62,7 @@ fun Formulir(onBeranda: () -> Unit,
     var textAkt by remember { mutableStateOf("")}
 
     val AktKelas: List<String> = listOf("2023-A", "2023-B","2023-C","2023-D","2023-E")
-    val Mteri: List<String> = listOf("Pengembangan Aplikasi Mobile", "Pengembangan Aplilkasi Web","Pengembangan Web Service","Tata Kelola Teknologi Informasi")
+    val Mteri: List<String> = listOf("Pengembangan Aplikasi Mobile", "Pengembangan Aplilkasi Web","Pengembangan Web Service","Tata Kelola Teknologi Informasi","Manajemen Proyek")
     val Jam: List<String> = listOf("08.50-11.30","13.20-16.20")
 
 

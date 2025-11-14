@@ -170,7 +170,7 @@ fun Login(onNavigate: () -> Unit,
                     onDismissRequest = { showDialog = false },
                     title = {
                         Text(
-                            text = "Data Registrasi",
+                            text = "Login",
                             fontSize = 22.sp,
                             color = Color(0xFF3F51B5)
                         )
@@ -186,8 +186,8 @@ fun Login(onNavigate: () -> Unit,
                     },
                     confirmButton = {
                         Button(
-//                            onClick = {true},
-                            onClick = onNavigate,
+                            onClick = {showDialog = false},
+//                            onClick = onNavigate,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color.Blue
                             )

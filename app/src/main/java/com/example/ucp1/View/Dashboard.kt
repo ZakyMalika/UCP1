@@ -71,24 +71,24 @@ fun Dashboard(onBeranda: () -> Unit,
             Kelas = "B"
         ),
         CardData(
-            MataKuliah = "Pengembangan Aplikasi Mobile",
+            MataKuliah = "Pengembangan Aplikasi Web",
             Angkatan = "2023",
-            Kelas = "B"
+            Kelas = "A"
         ),
         CardData(
-            MataKuliah = "Pengembangan Aplikasi Mobile",
+            MataKuliah = "Pengembangan Web Service",
             Angkatan = "2023",
-            Kelas = "B"
+            Kelas = "C"
         ),
         CardData(
-            MataKuliah = "Pengembangan Aplikasi Mobile",
+            MataKuliah = "Tata Kelola Teknologi Informasi",
             Angkatan = "2023",
-            Kelas = "B"
+            Kelas = "D"
         ),
         CardData(
-            MataKuliah = "Pengembangan Aplikasi Mobile",
+            MataKuliah = "Manajemen Proyek",
             Angkatan = "2023",
-            Kelas = "B"
+            Kelas = "A"
         ),
 
         )
