@@ -137,7 +137,12 @@ fun Login(onNavigate: () -> Unit,
             ) {
                 Checkbox(
                     checked = checked,
-                    onCheckedChange = { checked = it },
+                    onCheckedChange = { isChecked ->
+                        checked = isChecked
+                        if (isChecked) {
+                            showDialog = true
+                        }
+                    },
                     modifier = Modifier.scale(1.3f),
                     colors = CheckboxDefaults.colors(
                         checkedColor = Color(0xFF3F51B5),
@@ -145,7 +150,7 @@ fun Login(onNavigate: () -> Unit,
                     )
                 )
 
-                Text(text = "Setuju",
+                Text(text = stringResource(id = R.string.setuju),
                     fontSize = 15.sp,
                     color = Color.Black)
             }
