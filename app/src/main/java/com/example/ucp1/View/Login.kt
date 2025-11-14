@@ -98,10 +98,12 @@ fun Login(onNavigate: () -> Unit,
                 .padding(isiRuang)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
             Text(
                 text = stringResource(id = R.string.username),
+
                 fontSize = 15.sp,
                 color = Color.Black
             )
@@ -110,7 +112,7 @@ fun Login(onNavigate: () -> Unit,
                 singleLine = true,
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.width(350.dp),
-                label = { Text(text = "Nama Lengkap") },
+                label = { Text(text = "Masukkan Username") },
                 onValueChange = { textUsername = it }
             )
 
@@ -124,7 +126,7 @@ fun Login(onNavigate: () -> Unit,
                 singleLine = true,
                 shape = MaterialTheme.shapes.large,
                 modifier = Modifier.width(350.dp),
-                label = { Text(text = "Password") },
+                label = { Text(text = "Masukkan Password") },
                 onValueChange = { textPass = it }
             )
 

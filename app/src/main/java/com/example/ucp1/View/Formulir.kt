@@ -57,10 +57,11 @@ fun Formulir(onBeranda: () -> Unit,
 
     var textNamadosen by remember { mutableStateOf("") }
     var textMateri by remember { mutableStateOf("") }
+
     var textAkt by remember { mutableStateOf("")}
 
-    val AktKelas: List<String> = listOf("23-A", "23-B","23-C")
-    val Mteri: List<String> = listOf("PAM", "PAW","PWS","TKTI")
+    val AktKelas: List<String> = listOf("2023-A", "2023-B","2023-C","2023-D","2023-E")
+    val Mteri: List<String> = listOf("Pengembangan Aplikasi Mobile", "Pengembangan Aplilkasi Web","Pengembangan Web Service","Tata Kelola Teknologi Informasi")
 
 
     var Mk by remember { mutableStateOf("") }
@@ -71,6 +72,8 @@ fun Formulir(onBeranda: () -> Unit,
     var Materi by remember { mutableStateOf("") }
 
     var expanded by remember { mutableStateOf(false) }
+    var expandedMk by remember { mutableStateOf(false) }
+    var expandedAkt by remember { mutableStateOf(false) }
 
 
     var textTanggal by remember { mutableStateOf("") }
@@ -103,7 +106,7 @@ fun Formulir(onBeranda: () -> Unit,
 
 
     Column(modifier = Modifier
-        .fillMaxWidth()
+        .fillMaxSize()
         .padding(top = 70.dp),
         horizontalAlignment = Alignment.CenterHorizontally){
 
@@ -115,141 +118,212 @@ fun Formulir(onBeranda: () -> Unit,
                 .padding(top = 50.dp, start = 20.dp, end = 20.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.LightGray)
-                .padding(20.dp)
+                .padding(30.dp)
         ) {
 
             Column {
-                Text(
-                    text = stringResource(id = R.string.Akt),
-                    fontSize = 15.sp,
-                    color = Color.Black
-                )
 
-                Box {
-                    OutlinedTextField(
-                        value = textMk,
-                        onValueChange = { textMk = it },
-                        label = { Text("Pilih Mata Kuliah") },
-                        singleLine = true,
-                        shape = MaterialTheme.shapes.large,
-                        readOnly = true,
-                        modifier = Modifier
-                            .width(350.dp)
-                            .clickable { expanded = true },
-                        trailingIcon = {
-                            IconButton(onClick = { expanded = !expanded }) {
-                                Icon(
-                                    imageVector = if (expanded)
-                                        Icons.Default.ArrowDropDown
-                                    else
-                                        Icons.Default.ArrowDropDown,
-                                    contentDescription = "Dropdown icon"
-                                )
-                            }
-                        }
-                    )
-
-
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false },
-                        modifier = Modifier.width(350.dp)
-                    ) {
-                        Mteri.forEach { status ->
-                            DropdownMenuItem(
-                                text = { Text(status) },
-                                onClick = {
-                                    textMk = status
-                                    expanded = false
-                                }
-                            )
-                        }
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(30.dp))
-                Text(
-                    text ="Angkatan-Kelas",
-                    fontSize = 15.sp,
-                    color = Color.Black
-                )
-                Row {
-                    AktKelas.forEach { item ->
-                        Row(modifier = Modifier.selectable(
-                            selected = textAkt == item,
-                            onClick = {textAkt=item}
-                        ), verticalAlignment = Alignment.CenterVertically){
-                            RadioButton(
-                                selected = textAkt == item,
-                                onClick = {
-                                    textAkt = item
-                                }
-                            )
-                            Text(item)
-                        }
-                    }
-                }
-//                date
-                Text(
-                    text ="Tanggal",
-                    fontSize = 15.sp,
-                    color = Color.Black
-                )
-
-                OutlinedTextField(
-                    value = textTanggal,
-                    onValueChange = { },
-                    label = { Text("Tanggal ") },
-                    readOnly = true,
-                    singleLine = true,
-                    trailingIcon = {
-                        IconButton(onClick = { datePickerDialog.show() }) {
-                            Icon(
-                                imageVector = Icons.Default.DateRange,
-                                contentDescription = "Pilih tanggal"
-                            )
-                        }
-                    },
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp)
-                        .padding(top = 30.dp)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) {
-                            datePickerDialog.show()
+                        // <--- DIHAPUS: Padding luar (top = 50.dp, start = 20.dp, end = 20.dp) dihapus
+                        //      Padding layar (16.dp) di Column terluar sudah menanganinya.
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(Color.LightGray)
+                        .padding(24.dp) // <--- DISESUAIKAN: Padding internal dari 30.dp menjadi 24.dp
+                ) {
+
+                    Column {
+                        Text(
+                            text = stringResource(id = R.string.Akt),
+                            fontSize = 15.sp,
+                            color = Color.Black
+                        )
+                        // Tambahkan spacer kecil antara label dan field
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        Box {
+                            OutlinedTextField(
+                                value = textMk,
+                                onValueChange = { textMk = it },
+                                label = { Text("Pilih Mata Kuliah") },
+                                singleLine = true,
+                                shape = MaterialTheme.shapes.large,
+                                readOnly = true,
+                                modifier = Modifier
+                                    .width(350.dp) // <-- Struktur dipertahankan
+                                    .clickable { expandedMk = true },
+                                trailingIcon = {
+                                    IconButton(onClick = { expandedMk = !expandedMk }) {
+                                        Icon(
+                                            imageVector = if (expandedMk)
+                                                Icons.Default.ArrowDropDown
+                                            else
+                                                Icons.Default.ArrowDropDown,
+                                            contentDescription = "Dropdown icon"
+                                        )
+                                    }
+                                }
+                            )
+
+
+                            DropdownMenu(
+                                expanded = expandedMk,
+                                onDismissRequest = { expandedMk = false },
+                                modifier = Modifier.width(350.dp) // <-- Struktur dipertahankan
+                            ) {
+                                Mteri.forEach { status ->
+                                    DropdownMenuItem(
+                                        text = { Text(status) },
+                                        onClick = {
+                                            textMk = status
+                                            expandedMk = false
+                                        }
+                                    )
+                                }
+                            }
                         }
-                )
-                Text(
-                    text = "Nama Dosen",
-                    fontSize = 15.sp,
-                    color = Color.Black
-                )
-                OutlinedTextField(
-                    value = textNamadosen,
-                    singleLine = true,
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier.width(350.dp),
-                    label = { Text(text = "Nama Dosen") },
-                    onValueChange = { textNamadosen = it }
-                )
 
-                Text(
-                    text = "Materi",
-                    fontSize = 15.sp,
-                    color = Color.Black
-                )
-                OutlinedTextField(
-                    value = textMateri,
-                    singleLine = true,
-                    shape = MaterialTheme.shapes.large,
-                    modifier = Modifier.width(350.dp),
-                    label = { Text(text = "Materi") },
-                    onValueChange = { textMateri = it }
-                )
+                        Spacer(modifier = Modifier.height(30.dp)) // <--- DISESUAIKAN: Dari 30.dp menjadi 16.dp
+
+                        Column() {
+                            Box { // <-- Struktur Box dipertahankan
+                                OutlinedTextField(
+                                    value = textAkt,
+                                    onValueChange = { textAkt = it },
+                                    label = { Text("Pilih Angkatan-Kelas") },
+                                    singleLine = true,
+                                    shape = MaterialTheme.shapes.large,
+                                    readOnly = true,
+                                    modifier = Modifier
+                                        .width(350.dp) // <-- Struktur dipertahankan
+                                        .clickable { expandedAkt = true },
+                                    trailingIcon = {
+                                        IconButton(onClick = { expandedAkt = !expandedAkt }) {
+                                            Icon(
+                                                imageVector = if (expandedAkt)
+                                                    Icons.Default.ArrowDropDown
+                                                else
+                                                    Icons.Default.ArrowDropDown,
+                                                contentDescription = "Dropdown icon"
+                                            )
+                                        }
+                                    }
+                                )
+
+//            untuk Angkatan-Kelas
+
+                                Box { // <-- Struktur Box dipertahankan
+                                    Text(
+                                        text = "Angkatan-Kelas",
+                                        fontSize = 15.sp,
+                                        color = Color.Black
+                                    )
+                                    Spacer(modifier = Modifier.height(70.dp)) // <--- DISESUAIKAN: Dari 30.dp menjadi 16.dp
+
+                                    DropdownMenu(
+                                        expanded = expandedAkt,
+                                        onDismissRequest = { expandedAkt = false },
+                                        modifier = Modifier
+                                            .width(350.dp)
+                                            .padding(top = 30.dp)
+                                    // <-- Struktur dipertahankan
+                                    ) {
+                                        AktKelas.forEach { status ->
+                                            DropdownMenuItem(
+                                                text = { Text(status) },
+                                                onClick = {
+                                                    textAkt = status
+                                                    expandedAkt = false
+                                                }
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
 
 
+
+                        // Tambahkan spacer konsisten antar field
+                        Spacer(modifier = Modifier.height(16.dp))
+
+//            date
+                        Text(
+                            text ="Tanggal",
+                            fontSize = 15.sp,
+                            color = Color.Black
+                        )
+                        // Tambahkan spacer kecil antara label dan field
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        OutlinedTextField(
+                            value = textTanggal,
+                            onValueChange = { },
+                            label = { Text("Tanggal ") },
+                            readOnly = true,
+                            singleLine = true,
+                            trailingIcon = {
+                                IconButton(onClick = { datePickerDialog.show() }) {
+                                    Icon(
+                                        imageVector = Icons.Default.DateRange,
+                                        contentDescription = "Pilih tanggal"
+                                    )
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(100.dp) // <-- Struktur dipertahankan
+                                // <--- DIHAPUS: .padding(top = 30.dp) dihapus agar konsisten
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null
+                                ) {
+                                    datePickerDialog.show()
+                                }
+                        )
+
+                        // Tambahkan spacer konsisten antar field
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Nama Dosen",
+                            fontSize = 15.sp,
+                            color = Color.Black
+                        )
+                        // Tambahkan spacer kecil antara label dan field
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        OutlinedTextField(
+                            value = textNamadosen,
+                            singleLine = true,
+                            shape = MaterialTheme.shapes.large,
+                            modifier = Modifier.width(350.dp), // <-- Struktur dipertahankan
+                            label = { Text(text = "Nama Dosen") },
+                            onValueChange = { textNamadosen = it }
+                        )
+
+                        // Tambahkan spacer konsisten antar field
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = "Materi",
+                            fontSize = 15.sp,
+                            color = Color.Black
+                        )
+                        // Tambahkan spacer kecil antara label dan field
+                        Spacer(modifier = Modifier.height(4.dp))
+
+                        OutlinedTextField(
+                            value = textMateri,
+                            singleLine = true,
+                            shape = MaterialTheme.shapes.large,
+                            modifier = Modifier.width(350.dp), // <-- Struktur dipertahankan
+                            label = { Text(text = "Materi") },
+                            onValueChange = { textMateri = it }
+                        )
+
+            }}}}
 
                 Box(Modifier.fillMaxSize()) {
                     Row(
@@ -372,5 +446,4 @@ fun Formulir(onBeranda: () -> Unit,
                         }
 
 
-                    }
-                }}}}}
+                    }}}}
