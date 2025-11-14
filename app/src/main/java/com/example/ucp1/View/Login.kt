@@ -96,9 +96,9 @@ fun Login(onNavigate: () -> Unit,
         Column(
             modifier = Modifier
                 .padding(isiRuang)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxSize()
+                .fillMaxWidth()
+                .padding(top = 100.dp, start = 50.dp, end = 50.dp)
 
         ) {
             Text(

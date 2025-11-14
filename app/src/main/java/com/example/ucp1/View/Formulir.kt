@@ -57,11 +57,13 @@ fun Formulir(onBeranda: () -> Unit,
 
     var textNamadosen by remember { mutableStateOf("") }
     var textMateri by remember { mutableStateOf("") }
+    var textJam by remember { mutableStateOf("")}
 
     var textAkt by remember { mutableStateOf("")}
 
     val AktKelas: List<String> = listOf("2023-A", "2023-B","2023-C","2023-D","2023-E")
     val Mteri: List<String> = listOf("Pengembangan Aplikasi Mobile", "Pengembangan Aplilkasi Web","Pengembangan Web Service","Tata Kelola Teknologi Informasi")
+    val Jam: List<String> = listOf("08.50-11.30","13.20-16.20")
 
 
     var Mk by remember { mutableStateOf("") }
@@ -70,6 +72,7 @@ fun Formulir(onBeranda: () -> Unit,
     var MTR by remember { mutableStateOf("") }
     var Akt by remember { mutableStateOf("") }
     var Materi by remember { mutableStateOf("") }
+    var Jamm by remember { mutableStateOf("") }
 
     var expanded by remember { mutableStateOf(false) }
     var expandedMk by remember { mutableStateOf(false) }
@@ -107,7 +110,7 @@ fun Formulir(onBeranda: () -> Unit,
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(top = 70.dp),
+        .padding(top = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally){
 
         Text(text = "FORMULIR PENDAFTARAN PRESENSI")
@@ -115,10 +118,10 @@ fun Formulir(onBeranda: () -> Unit,
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 50.dp, start = 20.dp, end = 20.dp)
+                .padding(top = 5.dp, start = 20.dp, end = 20.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .background(Color.LightGray)
-                .padding(30.dp)
+                .padding(10.dp)
         ) {
 
             Column {
@@ -126,11 +129,9 @@ fun Formulir(onBeranda: () -> Unit,
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        // <--- DIHAPUS: Padding luar (top = 50.dp, start = 20.dp, end = 20.dp) dihapus
-                        //      Padding layar (16.dp) di Column terluar sudah menanganinya.
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color.LightGray)
-                        .padding(24.dp) // <--- DISESUAIKAN: Padding internal dari 30.dp menjadi 24.dp
+                        .padding(24.dp)
                 ) {
 
                     Column {
@@ -139,7 +140,7 @@ fun Formulir(onBeranda: () -> Unit,
                             fontSize = 15.sp,
                             color = Color.Black
                         )
-                        // Tambahkan spacer kecil antara label dan field
+
                         Spacer(modifier = Modifier.height(4.dp))
 
                         Box {
@@ -184,10 +185,15 @@ fun Formulir(onBeranda: () -> Unit,
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(30.dp)) // <--- DISESUAIKAN: Dari 30.dp menjadi 16.dp
+                        Spacer(modifier = Modifier.height(16.dp))
 
                         Column() {
-                            Box { // <-- Struktur Box dipertahankan
+                            Text(
+                                text = "Angkatan-Kelas",
+                                fontSize = 15.sp,
+                                color = Color.Black
+                            )
+                            Box {
                                 OutlinedTextField(
                                     value = textAkt,
                                     onValueChange = { textAkt = it },
@@ -196,7 +202,7 @@ fun Formulir(onBeranda: () -> Unit,
                                     shape = MaterialTheme.shapes.large,
                                     readOnly = true,
                                     modifier = Modifier
-                                        .width(350.dp) // <-- Struktur dipertahankan
+                                        .width(350.dp)
                                         .clickable { expandedAkt = true },
                                     trailingIcon = {
                                         IconButton(onClick = { expandedAkt = !expandedAkt }) {
@@ -213,21 +219,36 @@ fun Formulir(onBeranda: () -> Unit,
 
 //            untuk Angkatan-Kelas
 
-                                Box { // <-- Struktur Box dipertahankan
-                                    Text(
-                                        text = "Angkatan-Kelas",
-                                        fontSize = 15.sp,
-                                        color = Color.Black
+                                Box {
+                                    OutlinedTextField(
+                                        value = textAkt,
+                                        onValueChange = { textAkt = it },
+                                        label = { Text("Pilih Angkatan-Kelas") },
+                                        singleLine = true,
+                                        shape = MaterialTheme.shapes.large,
+                                        readOnly = true,
+                                        modifier = Modifier
+                                            .width(350.dp)
+                                            .clickable { expandedAkt = true },
+                                        trailingIcon = {
+                                            IconButton(onClick = { expandedAkt = !expandedAkt }) {
+                                                Icon(
+                                                    imageVector = if (expandedAkt)
+                                                        Icons.Default.ArrowDropDown
+                                                    else
+                                                        Icons.Default.ArrowDropDown,
+                                                    contentDescription = "Dropdown icon"
+                                                )
+                                            }
+                                        }
                                     )
-                                    Spacer(modifier = Modifier.height(70.dp)) // <--- DISESUAIKAN: Dari 30.dp menjadi 16.dp
 
                                     DropdownMenu(
                                         expanded = expandedAkt,
                                         onDismissRequest = { expandedAkt = false },
                                         modifier = Modifier
                                             .width(350.dp)
-                                            .padding(top = 30.dp)
-                                    // <-- Struktur dipertahankan
+
                                     ) {
                                         AktKelas.forEach { status ->
                                             DropdownMenuItem(
@@ -283,7 +304,31 @@ fun Formulir(onBeranda: () -> Unit,
                                 }
                         )
 
-                        // Tambahkan spacer konsisten antar field
+                        Text(
+                            text = "Jam",
+                            fontSize = 15.sp,
+                            color = Color.Black,
+                            modifier = Modifier.padding(start = 20.dp,top = 10.dp)
+                        )
+
+                        Column {
+                            Jam.forEach { item ->
+                                Row (
+                                    modifier = Modifier.selectable(
+                                        selected = textJam == item,
+                                        onClick = { textJam = item }
+                                    )
+                                ) {
+                                    RadioButton(selected = textJam == item, onClick = { textJam = item })
+                                    Text(item)
+                                }
+                            }
+                        }
+
+
+
+
+
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
@@ -349,6 +394,7 @@ fun Formulir(onBeranda: () -> Unit,
                                 Mk = textMk
                                 Akt = textAkt
                                 Tanggal = textTanggal
+                                Jamm = textJam
                                 Namadosen = textNamadosen
                                 Materi = textMateri
                                 showDialog = true
@@ -402,6 +448,16 @@ fun Formulir(onBeranda: () -> Unit,
                                         )
                                         Text(
                                             text = Tanggal,
+                                            fontSize = 16.sp,
+                                            modifier = Modifier.padding(bottom = 12.dp)
+                                        )
+                                        Text(
+                                            text = "Jam:",
+                                            fontSize = 14.sp,
+                                            color = Color.Gray
+                                        )
+                                        Text(
+                                            text = Jamm,
                                             fontSize = 16.sp,
                                             modifier = Modifier.padding(bottom = 12.dp)
                                         )

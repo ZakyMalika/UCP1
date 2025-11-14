@@ -106,9 +106,9 @@ fun Dashboard(onBeranda: () -> Unit,
                             painter = gambar1,
                             contentDescription = null,
                             modifier = Modifier
-                                .size(size = 150.dp)
+                                .size(size = 80.dp)
                                 .padding(all = 1.dp)
-                                .clip(CircleShape)
+                                .clip(RoundedCornerShape(16.dp))
 
                         )
 
