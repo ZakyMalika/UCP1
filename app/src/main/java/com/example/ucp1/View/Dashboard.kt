@@ -109,7 +109,7 @@ fun Dashboard(onBeranda: () -> Unit,
                             modifier = Modifier
                                 .size(size = 80.dp)
                                 .padding(all = 1.dp)
-                                .clip(RoundedCornerShape(16.dp))
+                                .clip(RoundedCornerShape(1000.dp))
 
                         )
 

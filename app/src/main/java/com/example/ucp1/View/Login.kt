@@ -5,8 +5,10 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.AlertDialog
@@ -115,6 +117,7 @@ fun Login(onNavigate: () -> Unit,
                 label = { Text(text = "Masukkan Username") },
                 onValueChange = { textUsername = it }
             )
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
                 text = stringResource(id = R.string.pass),
@@ -130,10 +133,11 @@ fun Login(onNavigate: () -> Unit,
                 onValueChange = { textPass = it }
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
 //            checkbox
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(top = 30.dp, start = 30.dp)
+                modifier = Modifier.padding(top = 30.dp)
             ) {
                 Checkbox(
                     checked = checked,
@@ -160,7 +164,8 @@ fun Login(onNavigate: () -> Unit,
                 enabled = checked,
                 onClick = onNavigate,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color.LightGray)
+                border = BorderStroke(1.dp, Color.LightGray),
+                modifier = Modifier.width(350.dp)
             )
             { Text("Login", color = Color.Black) }
 

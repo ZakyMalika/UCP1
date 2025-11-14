@@ -62,7 +62,8 @@ fun Formulir(onBeranda: () -> Unit,
     var textAkt by remember { mutableStateOf("")}
 
     val AktKelas: List<String> = listOf("2023-A", "2023-B","2023-C","2023-D","2023-E")
-    val Mteri: List<String> = listOf("Pengembangan Aplikasi Mobile", "Pengembangan Aplilkasi Web","Pengembangan Web Service","Tata Kelola Teknologi Informasi","Manajemen Proyek")
+    val Mteri: List<String> = listOf("Pengembangan Aplikasi Mobile", "Pengembangan Aplilkasi Web","Pengembangan Web Service",
+        "Tata Kelola Teknologi Informasi","Manajemen Proyek")
     val Jam: List<String> = listOf("08.50-11.30","13.20-16.20")
 
 
@@ -103,7 +104,12 @@ fun Formulir(onBeranda: () -> Unit,
 
     var showDialog by remember { mutableStateOf(false) }
 
-
+    val isFormValid = textMk.isNotEmpty() &&
+            textAkt.isNotEmpty() &&
+            textTanggal.isNotEmpty() &&
+            textJam.isNotEmpty() &&
+            textNamadosen.isNotEmpty() &&
+            textMateri.isNotEmpty()
 
 
 
@@ -152,7 +158,7 @@ fun Formulir(onBeranda: () -> Unit,
                                 shape = MaterialTheme.shapes.large,
                                 readOnly = true,
                                 modifier = Modifier
-                                    .width(350.dp) // <-- Struktur dipertahankan
+                                    .width(350.dp)
                                     .clickable { expandedMk = true },
                                 trailingIcon = {
                                     IconButton(onClick = { expandedMk = !expandedMk }) {
@@ -266,7 +272,7 @@ fun Formulir(onBeranda: () -> Unit,
 
 
 
-                        // Tambahkan spacer konsisten antar field
+                        // Tambahkan spacer
                         Spacer(modifier = Modifier.height(16.dp))
 
 //            date
@@ -275,7 +281,7 @@ fun Formulir(onBeranda: () -> Unit,
                             fontSize = 15.sp,
                             color = Color.Black
                         )
-                        // Tambahkan spacer kecil antara label dan field
+                        // Tambahkan spacer
                         Spacer(modifier = Modifier.height(4.dp))
 
                         OutlinedTextField(
@@ -294,8 +300,8 @@ fun Formulir(onBeranda: () -> Unit,
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(100.dp) // <-- Struktur dipertahankan
-                                // <--- DIHAPUS: .padding(top = 30.dp) dihapus agar konsisten
+                                .height(70.dp)
+
                                 .clickable(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null
@@ -305,13 +311,13 @@ fun Formulir(onBeranda: () -> Unit,
                         )
 
                         Text(
-                            text = "Jam",
+                            text = "Waktu Kuliah",
                             fontSize = 15.sp,
                             color = Color.Black,
-                            modifier = Modifier.padding(start = 20.dp,top = 10.dp)
+                            modifier = Modifier.padding(top = 10.dp)
                         )
 
-                        Column {
+                        Column() {
                             Jam.forEach { item ->
                                 Row (
                                     modifier = Modifier.selectable(
@@ -320,7 +326,7 @@ fun Formulir(onBeranda: () -> Unit,
                                     )
                                 ) {
                                     RadioButton(selected = textJam == item, onClick = { textJam = item })
-                                    Text(item)
+                                    Text(item, modifier = Modifier.padding(top = 12.dp))
                                 }
                             }
                         }
@@ -336,19 +342,22 @@ fun Formulir(onBeranda: () -> Unit,
                             fontSize = 15.sp,
                             color = Color.Black
                         )
-                        // Tambahkan spacer kecil antara label dan field
+                        // Tambahkan space
                         Spacer(modifier = Modifier.height(4.dp))
 
                         OutlinedTextField(
                             value = textNamadosen,
                             singleLine = true,
                             shape = MaterialTheme.shapes.large,
-                            modifier = Modifier.width(350.dp), // <-- Struktur dipertahankan
+                            modifier = Modifier.width(350.dp),
                             label = { Text(text = "Nama Dosen") },
-                            onValueChange = { textNamadosen = it }
+                            onValueChange = { newValue ->
+
+                                if (!newValue.any { it.isDigit() }) {
+                                    textNamadosen = newValue }}
                         )
 
-                        // Tambahkan spacer konsisten antar field
+                        // Tambahkan spac
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
@@ -363,9 +372,12 @@ fun Formulir(onBeranda: () -> Unit,
                             value = textMateri,
                             singleLine = true,
                             shape = MaterialTheme.shapes.large,
-                            modifier = Modifier.width(350.dp), // <-- Struktur dipertahankan
+                            modifier = Modifier.width(350.dp),
                             label = { Text(text = "Materi") },
-                            onValueChange = { textMateri = it }
+                            onValueChange = { newValue ->
+
+                                if (!newValue.any { it.isDigit() }) {
+                                    textMateri = newValue }}
                         )
 
             }}}}
@@ -388,6 +400,8 @@ fun Formulir(onBeranda: () -> Unit,
                         ) { Text("Beranda", color = Color.Black) }
 
                         Button(
+//                            validasi kesaatu
+                            enabled = isFormValid,
 
 
                             onClick = {
@@ -502,4 +516,7 @@ fun Formulir(onBeranda: () -> Unit,
                         }
 
 
-                    }}}}
+                    }
+                }
+    }
+}
